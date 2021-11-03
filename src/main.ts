@@ -6,6 +6,8 @@ import logger from "./shared/logger";
 import { urlencoded, json } from "express";
 import { loggerMiddleware } from "./middlewares";
 import { Sequelize } from "sequelize";
+import { NotificationController } from "./controllers";
+import { StockThresholdService, NotificationService } from "./services";
 
 declare global {
     namespace NodeJS {
@@ -29,6 +31,11 @@ let sequelize:Sequelize = null;
 
 const app = new App({
     controllers: [
+        new NotificationController(
+            new NotificationService(),
+            new StockThresholdService
+        )
+
     ],
     middlewares: [
         helmet(),

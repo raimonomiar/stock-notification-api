@@ -1,7 +1,8 @@
 import { Sequelize } from "sequelize";
 import { IDatabaseConnectionOptions } from "../shared/interfaces";
 import { logInfo } from "./loginfo.model";
-
+import { userEmail } from "./useremail.model";
+import { stockThreshold } from "./stockthreshold.model";
 
 export const sequelize = async (connOptions: IDatabaseConnectionOptions) => {
     try {
@@ -28,6 +29,8 @@ export const sequelize = async (connOptions: IDatabaseConnectionOptions) => {
 
         //initialize models
         logInfo(config);
+        userEmail(config);
+        stockThreshold(config);
 
     } catch (error) {
         global.logger.log({
@@ -40,3 +43,5 @@ export const sequelize = async (connOptions: IDatabaseConnectionOptions) => {
 }
 
 export * from "./loginfo.model";
+export * from "./useremail.model";
+export * from "./stockthreshold.model"
