@@ -14,16 +14,14 @@ export class NotificationController implements IController {
 
     initRoutes() {
         this.router.post("/", [validateNotification], this.create);
-        this.router.delete("/", [validateNotification], this.delete);
+        this.router.delete("/", this.delete);
     }
 
     create = async (request: Request, response: Response, next: NextFunction) => {
         try {
             const { email, symbol, threshold } = request.body;
             const emailUser = await this.notificationService.add({ email });
-        
-            
-            await this.stockThresholdService.add({ symbol, threshold, useremailid: emailUser.getDataValue('useremailid')});
+            await this.stockThresholdService.add({ symbol, threshold, useremailid: emailUser.getDataValue('useremailid') });
 
             response.status(201).send();
         } catch (error) {
@@ -33,13 +31,13 @@ export class NotificationController implements IController {
 
     delete = async (request: Request, response: Response, next: NextFunction) => {
         try {
-            const { email, symbol, threshold } = request.body;
+            const { email, symbol } = request.body;
             const emailUser = await this.notificationService.find(email);
-            if (emailUser === undefined) {
+            if (emailUser == null) {
                 return response.status(404).send({ message: "User email not found" });
             }
 
-            const stockThreshold = await this.stockThresholdService.delete({ symbol, threshold, useremailid: emailUser.getDataValue('useremailid') });
+            const stockThreshold = await this.stockThresholdService.delete({ symbol, useremailid: emailUser.getDataValue('useremailid') });
 
             if (stockThreshold == null) {
                 return response.status(404).send({ message: "Symbol not found" });

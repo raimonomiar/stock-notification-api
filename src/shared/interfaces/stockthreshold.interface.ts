@@ -1,5 +1,5 @@
 export interface IStockThreshold {
     symbol: string,
-    threshold: number,
+    threshold?: number,
     useremailid: number
 }
