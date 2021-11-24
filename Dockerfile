@@ -6,7 +6,7 @@ RUN npm i typescript
 COPY . "./"
 RUN npm run build
 
-FROM node as app
+FROM node:14 as app
 
 WORKDIR /usr/src/app
 COPY --from=builder /usr/src/app "./"
