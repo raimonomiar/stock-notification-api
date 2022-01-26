@@ -40,24 +40,24 @@ export default class App {
 
     middlewares(middlewares: any[]) {
 
-        if (['production'].indexOf(process.env.NODE_ENV) !== -1) {
-            const whiteList: string[] = process.env.CORS_DOMAINS.split(',');
+        // if (['production'].indexOf(process.env.NODE_ENV) !== -1) {
+        //     const whiteList: string[] = process.env.CORS_DOMAINS.split(',');
 
-            const corsOptions = {
-                origin: (origin: string, callback: any) => {
-                    if (!origin) return callback(null, true);
-                    if (whiteList.indexOf(origin) !== -1) {
-                        callback(null, true)
-                    } else {
-                        callback(new Error('Domain is not valid'))
-                    }
-                }
-            }
+        //     const corsOptions = {
+        //         origin: (origin: string, callback: any) => {
+        //             if (!origin) return callback(null, true);
+        //             if (whiteList.indexOf(origin) !== -1) {
+        //                 callback(null, true)
+        //             } else {
+        //                 callback(new Error('Domain is not valid'))
+        //             }
+        //         }
+        //     }
 
-            this.app.use(cors(corsOptions));
-        } else {
-            this.app.use(cors());
-        }
+        //     this.app.use(cors(corsOptions));
+        // } else {
+        //     this.app.use(cors());
+        // }
 
         middlewares.forEach(middleware => {
             this.app.use(middleware);
